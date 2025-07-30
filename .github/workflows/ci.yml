@@ -1,0 +1,28 @@
+name: CI - Lint and Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install || echo "skip install (no package.json yet)"
+
+      - name: Lint (placeholder)
+        run: echo "No linter configured yet"
+
+      - name: Test (placeholder)
+        run: echo "No tests configured yet"
