@@ -1,34 +1,61 @@
-import React, { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
 import { ArrowDown, Github, Linkedin, Mail, ExternalLink } from 'lucide-react';
 
-// 3D Floating Orb Component
-const FloatingOrb = () => {
-  const meshRef = useRef();
+import LiquidGlassButton from './LiquidGlassButton';
 
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime) * 0.3;
-      meshRef.current.rotation.y =
-        Math.sin(state.clock.elapsedTime * 0.5) * 0.5;
-      meshRef.current.position.y =
-        Math.sin(state.clock.elapsedTime * 0.8) * 0.5;
+// Typewriter Effect Component
+const TypewriterText = () => {
+  const [text, setText] = useState('');
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentPhrase, setCurrentPhrase] = useState(0);
+
+  useEffect(() => {
+    const phrases = [
+      'Full-Stack Developer',
+      'React & Node.js Specialist',
+      'UI/UX Enthusiast',
+      'Problem Solver & Innovator',
+    ];
+
+    const currentText = phrases[currentPhrase];
+
+    if (currentIndex < currentText.length) {
+      const timeout = setTimeout(() => {
+        setText(currentText.slice(0, currentIndex + 1));
+        setCurrentIndex(currentIndex + 1);
+      }, 50);
+      return () => clearTimeout(timeout);
+    } else {
+      const timeout = setTimeout(() => {
+        setText('');
+        setCurrentIndex(0);
+        setCurrentPhrase((prev) => (prev + 1) % phrases.length);
+      }, 2000);
+      return () => clearTimeout(timeout);
     }
-  });
+  }, [currentIndex, currentPhrase]);
 
   return (
-    <mesh ref={meshRef} scale={2}>
-      <sphereGeometry args={[1, 32, 32]} />
-      <meshStandardMaterial
-        color='#8b5cf6'
-        roughness={0.4}
-        metalness={0.6}
-        transparent
-        opacity={0.8}
-      />
-    </mesh>
+    <span className='min-h-[1.2em] inline-block'>
+      {text}
+      <span className='animate-pulse'>|</span>
+    </span>
+  );
+};
+
+// Simple animated background shapes
+const FloatingShapes = () => {
+  return (
+    <>
+      {/* Floating geometric shapes */}
+      <div className='absolute inset-0 overflow-hidden pointer-events-none'>
+        <div className='absolute top-20 left-10 w-20 h-20 bg-blue-500/10 rounded-full blur-xl animate-pulse' />
+        <div className='absolute top-40 right-20 w-32 h-32 bg-purple-500/10 rounded-full blur-xl animate-pulse delay-1000' />
+        <div className='absolute bottom-40 left-20 w-24 h-24 bg-cyan-500/10 rounded-full blur-xl animate-pulse delay-2000' />
+        <div className='absolute bottom-20 right-10 w-16 h-16 bg-pink-500/10 rounded-full blur-xl animate-pulse delay-3000' />
+      </div>
+    </>
   );
 };
 
@@ -65,14 +92,18 @@ const Hero = () => {
       {/* Animated Background Gradient */}
       <div className='absolute inset-0 bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-slate-900/20' />
 
-      {/* 3D Canvas */}
-      <div className='absolute inset-0 z-0'>
-        <Canvas camera={{ position: [0, 0, 5] }}>
-          <ambientLight intensity={0.5} />
-          <pointLight position={[10, 10, 10]} />
-          <FloatingOrb />
-          <OrbitControls enableZoom={false} enablePan={false} />
-        </Canvas>
+      {/* Simple Background Effects */}
+      <FloatingShapes />
+
+      {/* Professional Grid Pattern */}
+      <div className='absolute inset-0 opacity-20 pointer-events-none'>
+        <div
+          className='absolute inset-0'
+          style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)`,
+            backgroundSize: '50px 50px',
+          }}
+        />
       </div>
 
       {/* Main Content */}
@@ -100,18 +131,19 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className='font-display text-5xl md:text-7xl lg:text-8xl font-bold mb-6'
           >
-            I'm <span className='gradient-text glow-text'>Richie</span>
+            <span className='iam-home-ligth-mode'>Hi, I'm </span>
+            <span className='gradient-text glow-text'>Richie Kosasih</span>
           </motion.h1>
 
-          {/* Subtitle */}
-          <motion.p
+          {/* Subtitle with Typewriter Effect */}
+          <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
             className='text-xl md:text-2xl lg:text-3xl text-gray-300 font-light mb-8 max-w-4xl mx-auto'
           >
-            3D Web Developer & Creative Problem Solver
-          </motion.p>
+            <TypewriterText />
+          </motion.div>
 
           {/* Description */}
           <motion.p
@@ -120,9 +152,10 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.8 }}
             className='text-lg text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed'
           >
-            Creating immersive web experiences with modern technologies.
-            Passionate about React, Three.js, and bringing ideas to life through
-            code.
+            Full-Stack Developer with expertise in React, Node.js, and modern
+            web technologies. I create scalable applications and exceptional
+            user experiences that drive business success. Ready to contribute to
+            your team's growth and innovation.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -132,24 +165,25 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 1 }}
             className='flex flex-col sm:flex-row gap-4 justify-center items-center mb-12'
           >
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <LiquidGlassButton
               onClick={scrollToProjects}
-              className='px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full text-white font-semibold text-lg btn-glow smooth-transition flex items-center space-x-2'
+              variant='primary'
+              size='lg'
+              className='flex items-center space-x-2'
             >
               <span>View My Work</span>
               <ExternalLink size={20} />
-            </motion.button>
+            </LiquidGlassButton>
 
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <LiquidGlassButton
               onClick={scrollToContact}
-              className='px-8 py-4 border-2 border-purple-500 rounded-full text-purple-300 font-semibold text-lg hover:bg-purple-500/20 smooth-transition'
+              variant='glass'
+              size='lg'
+              className='flex items-center space-x-2'
             >
-              Get In Touch
-            </motion.button>
+              <span>Get In Touch</span>
+              <Mail size={20} />
+            </LiquidGlassButton>
           </motion.div>
 
           {/* Social Links */}

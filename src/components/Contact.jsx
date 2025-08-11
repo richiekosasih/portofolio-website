@@ -13,45 +13,13 @@ import {
   Coffee,
   Heart,
 } from 'lucide-react';
+import ContactForm from './ContactForm';
 
 const Contact = () => {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
-
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-  });
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
-
-  const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitStatus('success');
-      setFormData({ name: '', email: '', subject: '', message: '' });
-
-      setTimeout(() => {
-        setSubmitStatus(null);
-      }, 5000);
-    }, 2000);
-  };
 
   const socialLinks = [
     {
@@ -144,141 +112,13 @@ const Contact = () => {
         </motion.div>
 
         <div className='grid lg:grid-cols-2 gap-12'>
-          {/* Contact Form */}
+          {/* Enhanced Contact Form */}
           <motion.div
             variants={containerVariants}
             initial='hidden'
             animate={inView ? 'visible' : 'hidden'}
           >
-            <motion.div
-              variants={itemVariants}
-              className='glass rounded-2xl p-8 border border-white/10'
-            >
-              <h3 className='font-display text-2xl font-bold text-white mb-6 flex items-center'>
-                <MessageCircle className='mr-3 text-purple-400' size={28} />
-                Send Me a Message
-              </h3>
-
-              <form onSubmit={handleSubmit} className='space-y-6'>
-                <div className='grid md:grid-cols-2 gap-4'>
-                  <div>
-                    <label
-                      htmlFor='name'
-                      className='block text-sm font-medium text-gray-300 mb-2'
-                    >
-                      Your Name
-                    </label>
-                    <input
-                      type='text'
-                      id='name'
-                      name='name'
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      required
-                      className='w-full px-4 py-3 bg-black/20 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-colors'
-                      placeholder='First and Last Name'
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor='email'
-                      className='block text-sm font-medium text-gray-300 mb-2'
-                    >
-                      Email Address
-                    </label>
-                    <input
-                      type='email'
-                      id='email'
-                      name='email'
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      required
-                      className='w-full px-4 py-3 bg-black/20 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-colors'
-                      placeholder='Hugh@example.com'
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label
-                    htmlFor='subject'
-                    className='block text-sm font-medium text-gray-300 mb-2'
-                  >
-                    Subject
-                  </label>
-                  <input
-                    type='text'
-                    id='subject'
-                    name='subject'
-                    value={formData.subject}
-                    onChange={handleInputChange}
-                    required
-                    className='w-full px-4 py-3 bg-black/20 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-colors'
-                    placeholder="Let's work together!"
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor='message'
-                    className='block text-sm font-medium text-gray-300 mb-2'
-                  >
-                    Message
-                  </label>
-                  <textarea
-                    id='message'
-                    name='message'
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    required
-                    rows={6}
-                    className='w-full px-4 py-3 bg-black/20 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-colors resize-none'
-                    placeholder='Tell me about your project or just say hello!'
-                  />
-                </div>
-
-                <motion.button
-                  type='submit'
-                  disabled={isSubmitting}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className='w-full px-6 py-4 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg text-white font-semibold text-lg btn-glow smooth-transition flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed'
-                >
-                  {isSubmitting ? (
-                    <>
-                      <motion.div
-                        animate={{ rotate: 360 }}
-                        transition={{
-                          duration: 1,
-                          repeat: Infinity,
-                          ease: 'linear',
-                        }}
-                        className='w-5 h-5 border-2 border-white/20 border-t-white rounded-full'
-                      />
-                      <span>Sending...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Send size={20} />
-                      <span>Send Message</span>
-                    </>
-                  )}
-                </motion.button>
-
-                {/* Success Message */}
-                {submitStatus === 'success' && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className='p-4 bg-green-500/20 border border-green-500/30 rounded-lg text-green-300 text-center'
-                  >
-                    ✅ Thank you! Your message has been sent successfully. I'll
-                    get back to you soon!
-                  </motion.div>
-                )}
-              </form>
-            </motion.div>
+            <ContactForm />
           </motion.div>
 
           {/* Contact Info & Social Links */}

@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 
 const LoadingScreen = () => {
@@ -14,20 +13,20 @@ const LoadingScreen = () => {
         <motion.div
           initial={{ scale: 0.5, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 1, delay: 0.5 }}
           className='mb-8'
         >
           <h1 className='font-display text-6xl font-bold gradient-text mb-2'>
             Richie
           </h1>
-          <p className='text-gray-300 text-xl font-light'>3D Web Developer</p>
+          <p className='text-gray-300 text-xl font-light'> Web Developer</p>
         </motion.div>
 
         {/* Loading Animation */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 1 }}
+          transition={{ duration: 4, delay: 4 }}
           className='flex items-center justify-center space-x-2'
         >
           <div className='flex space-x-1'>

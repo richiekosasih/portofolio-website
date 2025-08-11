@@ -2,6 +2,20 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+/* CSS Variables for Theming */
+:root {
+  --theme-primary: from-purple-600 to-blue-600;
+  --theme-secondary: from-purple-500 to-pink-500;
+  --theme-accent: from-purple-400 to-blue-400;
+  --theme-background: from-slate-900 via-purple-900 to-slate-900;
+  --theme-glass: rgba(139, 92, 246, 0.1);
+  --theme-glow: rgba(168, 85, 247, 0.3);
+  --theme-text-primary: #ffffff;
+  --theme-text-secondary: #e2e8f0;
+  --theme-text-muted: #94a3b8;
+  --theme-text-accent: #a855f7;
+}
+
 /* Global Styles */
 /* Mobile Optimization */
 @media (max-width: 768px) {
@@ -33,9 +47,10 @@ html {
 
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--theme-background));
+  color: var(--theme-text-primary);
   overflow-x: hidden;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 /* Custom Scrollbar */
@@ -58,18 +73,19 @@ body {
 
 /* Glow Effects */
 .glow-text {
-  text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+  text-shadow: 0 0 10px var(--theme-glow);
 }
 
 .glow-box {
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+  box-shadow: 0 0 20px var(--theme-glow);
 }
 
 /* Glassmorphism Effect */
 .glass {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--theme-glass);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: background 0.3s ease;
 }
 
 /* Gradient Text */
@@ -127,7 +143,7 @@ body {
 
 /* Custom Button Hover Effects */
 .btn-glow:hover {
-  box-shadow: 0 0 30px rgba(168, 85, 247, 0.6);
+  box-shadow: 0 0 30px var(--theme-glow);
   transform: translateY(-2px);
 }
 
@@ -167,4 +183,516 @@ body {
 .card-hover:hover {
   transform: translateY(-10px) rotateX(5deg);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Enhanced Animations */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(168, 85, 247, 0.6);
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.float-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.gradient-shift {
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+/* Interactive Elements */
+.interactive-card {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.interactive-card:hover {
+  transform: rotateY(5deg) rotateX(5deg) translateZ(20px);
+}
+
+/* Typewriter Effect */
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.typewriter-cursor {
+  animation: blink 1s infinite;
+}
+
+/* Floating Action Button */
+.fab {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  cursor: pointer;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fab:hover {
+  transform: translateY(-2px) scale(1.1);
+  box-shadow: 0 8px 30px var(--theme-glow);
+}
+
+/* Mobile Responsive Improvements */
+@media (max-width: 640px) {
+  .fab {
+    bottom: 1rem;
+    right: 1rem;
+    width: 48px;
+    height: 48px;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-5px);
+  }
+
+  .interactive-card:hover {
+    transform: translateZ(10px);
+  }
+}
+
+/* Loading Spinner */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+/* Smooth Reveal Animation */
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal-animation {
+  animation: reveal 0.8s ease-out forwards;
+}
+
+/* Theme-aware utilities */
+.theme-primary {
+  background: linear-gradient(135deg, var(--theme-primary));
+}
+
+.theme-secondary {
+  background: linear-gradient(135deg, var(--theme-secondary));
+}
+
+.theme-accent {
+  background: linear-gradient(135deg, var(--theme-accent));
+}
+
+.theme-text-primary {
+  color: var(--theme-text-primary);
+}
+
+.theme-text-secondary {
+  color: var(--theme-text-secondary);
+}
+
+.theme-text-muted {
+  color: var(--theme-text-muted);
+}
+
+.theme-text-accent {
+  color: var(--theme-text-accent);
+}
+
+.theme-glass {
+  background: var(--theme-glass);
+}
+
+.theme-glow {
+  box-shadow: 0 0 20px var(--theme-glow);
+}
+
+/* Light mode adjustments */
+/* Light mode support */
+body.light-mode {
+  color: #1f2937;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+}
+
+body.light-mode .glass {
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(20px);
+}
+
+/* Enhanced transparency for light mode */
+@media (prefers-color-scheme: light) {
+  .bg-white\/5 {
+    background-color: rgba(255, 255, 255, 0.4) !important;
+  }
+
+  .bg-white\/10 {
+    background-color: rgba(255, 255, 255, 0.5) !important;
+  }
+
+  .border-white\/10 {
+    border-color: rgba(0, 0, 0, 0.1) !important;
+  }
+
+  .border-white\/20 {
+    border-color: rgba(0, 0, 0, 0.15) !important;
+  }
+
+  .border-white\/30 {
+    border-color: rgba(0, 0, 0, 0.2) !important;
+  }
+}
+
+body.light-mode .iam-home-ligth-mode {
+  color: #455a78;
+}
+
+body.light-mode .card-hover:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Theme transition animations */
+.theme-transition {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Animated background gradients */
+@keyframes theme-shift {
+  0% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.8;
+  }
+}
+
+.theme-animated-bg {
+  animation: theme-shift 4s ease-in-out infinite;
+}
+
+/* Liquid Glass Effect */
+.liquid-glass {
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.liquid-glass::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.liquid-glass:hover::before {
+  left: 100%;
+}
+
+.liquid-glass::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.3) 0%,
+    transparent 70%
+  );
+  transform: translate(-50%, -50%);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 50%;
+}
+
+.liquid-glass:hover::after {
+  width: 300px;
+  height: 300px;
+}
+
+/* Liquid ripple effect */
+@keyframes liquid-ripple {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(4);
+    opacity: 0;
+  }
+}
+
+.liquid-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  animation: liquid-ripple 0.6s ease-out;
+}
+
+/* Enhanced glass morphism */
+.glass-morphism {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Liquid button variants */
+.liquid-button {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.05)
+  );
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.liquid-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.liquid-button .liquid-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  transition: left 0.6s ease-out;
+}
+
+.liquid-button:hover .liquid-shine {
+  left: 100%;
+}
+
+/* Floating liquid orbs */
+@keyframes float-liquid {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+    border-radius: 50% 40% 60% 30%;
+  }
+  25% {
+    transform: translateY(-10px) rotate(90deg);
+    border-radius: 60% 50% 40% 60%;
+  }
+  50% {
+    transform: translateY(-5px) rotate(180deg);
+    border-radius: 40% 60% 50% 40%;
+  }
+  75% {
+    transform: translateY(-15px) rotate(270deg);
+    border-radius: 50% 40% 60% 30%;
+  }
+}
+
+.liquid-orb {
+  animation: float-liquid 4s ease-in-out infinite;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.05)
+  );
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Space Background Enhancements */
+.space-background {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(25, 25, 50, 0.8) 0%,
+    rgba(15, 15, 30, 0.9) 50%,
+    rgba(5, 5, 15, 1) 100%
+  );
+}
+
+.earth-glow {
+  box-shadow: 0 0 60px rgba(100, 149, 237, 0.3),
+    0 0 120px rgba(100, 149, 237, 0.1), inset 0 0 30px rgba(255, 255, 255, 0.1);
+}
+
+/* Time-based gradients */
+.day-background {
+  background: linear-gradient(
+    135deg,
+    rgba(135, 206, 235, 0.1) 0%,
+    rgba(25, 25, 50, 0.8) 50%,
+    rgba(15, 15, 30, 0.9) 100%
+  );
+}
+
+.night-background {
+  background: linear-gradient(
+    135deg,
+    rgba(25, 25, 80, 0.2) 0%,
+    rgba(15, 15, 40, 0.9) 50%,
+    rgba(5, 5, 20, 1) 100%
+  );
+}
+
+/* Earth atmosphere effect */
+@keyframes atmosphere-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 60px rgba(100, 149, 237, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 80px rgba(100, 149, 237, 0.5);
+  }
+}
+
+.earth-atmosphere {
+  animation: atmosphere-glow 4s ease-in-out infinite;
+}
+
+/* Stellar parallax effect */
+.stellar-layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+    radial-gradient(
+      1px 1px at 130px 80px,
+      rgba(255, 255, 255, 0.6),
+      transparent
+    );
+  background-repeat: repeat;
+  background-size: 200px 100px;
+  animation: stellar-drift 120s linear infinite;
+}
+
+@keyframes stellar-drift {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-200px);
+  }
+}
+
+/* Time indicator styles */
+.time-indicator {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.05)
+  );
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.sun-indicator {
+  background: radial-gradient(
+    circle,
+    rgba(255, 215, 0, 0.8) 0%,
+    rgba(255, 165, 0, 0.6) 50%,
+    transparent 100%
+  );
+}
+
+.moon-indicator {
+  background: radial-gradient(
+    circle,
+    rgba(173, 216, 230, 0.8) 0%,
+    rgba(135, 206, 235, 0.6) 50%,
+    transparent 100%
+  );
 }

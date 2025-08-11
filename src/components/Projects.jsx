@@ -9,6 +9,8 @@ import {
   Palette,
   Smartphone,
 } from 'lucide-react';
+import LiquidGlassButton from './LiquidGlassButton';
+import ProjectShowcase from './ProjectShowcase';
 
 const Projects = () => {
   const [ref, inView] = useInView({
@@ -195,136 +197,8 @@ const Projects = () => {
           </motion.p>
         </motion.div>
 
-        {/* Filter Buttons */}
-        <motion.div
-          variants={containerVariants}
-          initial='hidden'
-          animate={inView ? 'visible' : 'hidden'}
-          className='flex flex-wrap justify-center gap-4 mb-12'
-        >
-          {categories.map((category) => {
-            const Icon = category.icon;
-            return (
-              <motion.button
-                key={category.id}
-                variants={itemVariants}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setFilter(category.id)}
-                className={`flex items-center space-x-2 px-6 py-3 rounded-full font-medium transition-all duration-300 ${
-                  filter === category.id
-                    ? 'bg-gradient-to-r from-purple-500 to-blue-500 text-white glow-box'
-                    : 'glass border border-white/20 text-gray-300 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                <Icon size={18} />
-                <span>{category.label}</span>
-              </motion.button>
-            );
-          })}
-        </motion.div>
-
-        {/* Projects Grid */}
-        <AnimatePresence mode='wait'>
-          <motion.div
-            key={filter}
-            variants={containerVariants}
-            initial='hidden'
-            animate='visible'
-            exit='hidden'
-            className='grid md:grid-cols-2 lg:grid-cols-3 gap-8'
-          >
-            {filteredProjects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                variants={itemVariants}
-                layout
-                whileHover={{
-                  y: -10,
-                  rotateY: 5,
-                  rotateX: 5,
-                }}
-                className={`glass rounded-2xl overflow-hidden border border-white/20 card-hover group ${
-                  project.featured ? 'lg:col-span-2' : ''
-                }`}
-                style={{ transformStyle: 'preserve-3d' }}
-              >
-                {/* Project Image/Icon */}
-                <div className='relative h-48 bg-gradient-to-br from-purple-900/50 to-blue-900/50 flex items-center justify-center'>
-                  <div className='text-6xl group-hover:scale-110 transition-transform duration-300'>
-                    {project.image}
-                  </div>
-
-                  {/* Status Badge */}
-                  <div
-                    className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-medium text-white bg-gradient-to-r ${getStatusColor(
-                      project.status
-                    )}`}
-                  >
-                    {getStatusText(project.status)}
-                  </div>
-
-                  {/* Featured Badge */}
-                  {project.featured && (
-                    <div className='absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-medium text-white bg-gradient-to-r from-pink-500 to-purple-500'>
-                      ⭐ Featured
-                    </div>
-                  )}
-
-                  {/* Overlay */}
-                  <div className='absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4'>
-                    <motion.a
-                      href={project.liveUrl}
-                      target='_blank'
-                      rel='noopener noreferrer'
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      className='p-3 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-white/30 transition-colors'
-                      title='View Live'
-                    >
-                      <ExternalLink size={20} />
-                    </motion.a>
-
-                    <motion.a
-                      href={project.githubUrl}
-                      target='_blank'
-                      rel='noopener noreferrer'
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      className='p-3 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-white/30 transition-colors'
-                      title='View Code'
-                    >
-                      <Github size={20} />
-                    </motion.a>
-                  </div>
-                </div>
-
-                {/* Project Info */}
-                <div className='p-6'>
-                  <h3 className='font-display text-xl font-bold text-white mb-2 group-hover:text-purple-300 transition-colors'>
-                    {project.title}
-                  </h3>
-
-                  <p className='text-gray-400 text-sm leading-relaxed mb-4'>
-                    {project.description}
-                  </p>
-
-                  {/* Tags */}
-                  <div className='flex flex-wrap gap-2'>
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className='px-2 py-1 bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-purple-500/30 rounded text-xs text-purple-300'
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </AnimatePresence>
+        {/* Enhanced Project Showcase */}
+        <ProjectShowcase />
 
         {/* Call to Action */}
         <motion.div
@@ -333,17 +207,17 @@ const Projects = () => {
           animate={inView ? 'visible' : 'hidden'}
           className='text-center mt-16'
         >
-          <motion.a
-            href='https://github.com/richie'
-            target='_blank'
-            rel='noopener noreferrer'
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className='inline-flex items-center space-x-2 px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full text-white font-semibold text-lg btn-glow smooth-transition'
+          <LiquidGlassButton
+            onClick={() =>
+              window.open('https://github.com/richiekosasih', '_blank')
+            }
+            variant='primary'
+            size='lg'
+            className='inline-flex items-center space-x-2'
           >
             <Github size={20} />
             <span>View All Projects on GitHub</span>
-          </motion.a>
+          </LiquidGlassButton>
         </motion.div>
       </div>
     </section>

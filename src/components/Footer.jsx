@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import {
   Heart,
@@ -183,16 +182,21 @@ const Footer = () => {
 
         {/* Bottom Section */}
         <div className='flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0'>
-          <motion.p
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.8 }}
             viewport={{ once: true }}
             className='text-gray-400 text-sm text-center md:text-left'
           >
-            © {currentYear} Richie. All rights reserved. Built with React,
-            Three.js & Tailwind CSS.
-          </motion.p>
+            <p className='mb-2'>
+              © {currentYear} Richie. All rights reserved. Built with React,
+              Node.js & Tailwind CSS.
+            </p>
+            <p className='text-gray-500 text-xs'>
+              Designed with passion for creating exceptional web experiences.
+            </p>
+          </motion.div>
 
           {/* Back to Top */}
           <motion.button

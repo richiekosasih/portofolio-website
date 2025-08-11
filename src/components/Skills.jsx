@@ -11,6 +11,7 @@ import {
   TrendingUp,
   Star,
 } from 'lucide-react';
+import SkillsVisualization from './SkillsVisualization';
 
 const Skills = () => {
   const [ref, inView] = useInView({
@@ -169,112 +170,8 @@ const Skills = () => {
           </motion.p>
         </motion.div>
 
-        {/* Skills Categories */}
-        <motion.div
-          variants={containerVariants}
-          initial='hidden'
-          animate={inView ? 'visible' : 'hidden'}
-          className='grid lg:grid-cols-2 gap-8'
-        >
-          {skillCategories.map((category, categoryIndex) => {
-            const Icon = category.icon;
-            return (
-              <motion.div
-                key={category.id}
-                variants={itemVariants}
-                whileHover={{ scale: 1.02 }}
-                className='glass rounded-2xl p-8 border border-white/10 card-hover'
-              >
-                {/* Category Header */}
-                <div className='flex items-center mb-6'>
-                  <div
-                    className={`w-12 h-12 rounded-xl bg-gradient-to-r ${category.color} flex items-center justify-center mr-4`}
-                  >
-                    <Icon size={24} className='text-white' />
-                  </div>
-                  <h3 className='font-display text-2xl font-bold text-white'>
-                    {category.title}
-                  </h3>
-                </div>
-
-                {/* Skills List */}
-                <div className='space-y-4'>
-                  {category.skills.map((skill, skillIndex) => (
-                    <motion.div
-                      key={skill.name}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{
-                        delay: inView
-                          ? categoryIndex * 0.2 + skillIndex * 0.1
-                          : 0,
-                        duration: 0.5,
-                      }}
-                      className='group'
-                    >
-                      {/* Skill Header */}
-                      <div className='flex items-center justify-between mb-2'>
-                        <div className='flex items-center space-x-3'>
-                          <span className='text-lg'>{skill.icon}</span>
-                          <span className='font-medium text-white group-hover:text-purple-300 transition-colors'>
-                            {skill.name}
-                          </span>
-                        </div>
-                        <div className='flex items-center space-x-2'>
-                          <span
-                            className={`text-xs px-2 py-1 rounded-full bg-gradient-to-r ${getSkillColor(
-                              skill.level
-                            )} text-white font-medium`}
-                          >
-                            {getSkillLabel(skill.level)}
-                          </span>
-                          <span className='text-sm text-gray-400'>
-                            {skill.level}%
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Skill Progress Bar */}
-                      <div className='w-full bg-gray-700/50 rounded-full h-2 overflow-hidden'>
-                        <motion.div
-                          initial={{ width: 0 }}
-                          animate={{
-                            width: inView
-                              ? `${animatedValues[skill.name] || 0}%`
-                              : 0,
-                          }}
-                          transition={{
-                            delay: inView
-                              ? categoryIndex * 0.2 + skillIndex * 0.1 + 0.5
-                              : 0,
-                            duration: 1.5,
-                            ease: 'easeOut',
-                          }}
-                          className={`h-full bg-gradient-to-r ${getSkillColor(
-                            skill.level
-                          )} rounded-full relative`}
-                        >
-                          <motion.div
-                            animate={{ x: [0, 10, 0] }}
-                            transition={{
-                              duration: 2,
-                              repeat: Infinity,
-                              ease: 'easeInOut',
-                              delay: inView
-                                ? categoryIndex * 0.2 + skillIndex * 0.1 + 2
-                                : 0,
-                            }}
-                            className='absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0'
-                          />
-                        </motion.div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-            );
-          })}
-        </motion.div>
+        {/* Enhanced Skills Visualization */}
+        <SkillsVisualization />
 
         {/* Learning Goals */}
         <motion.div

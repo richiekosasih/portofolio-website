@@ -1,7 +1,7 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { Code, Palette, Lightbulb, Users, Rocket, Heart } from 'lucide-react';
+import { Code, Palette, Users, Rocket, Heart } from 'lucide-react';
+import ProjectShowcaseGrid from './ProjectShowcaseGrid';
 
 const About = () => {
   const [ref, inView] = useInView({
@@ -109,32 +109,38 @@ const About = () => {
           >
             <motion.div
               variants={itemVariants}
-              className='glass rounded-2xl p-8 border border-white/10'
+              className='bg-white/10 dark:bg-white/5 rounded-2xl p-8 border border-white/30 dark:border-white/10 backdrop-blur-xl hover:bg-white/15 dark:hover:bg-white/10 transition-all duration-300'
             >
-              <h3 className='font-display text-2xl font-bold text-white mb-4 flex items-center'>
+              <h3 className='font-display text-2xl font-bold text-gray-900 dark:text-white mb-4 flex items-center'>
                 <Heart className='mr-3 text-pink-500' size={28} />
                 My Journey
               </h3>
-              <div className='space-y-4 text-gray-300 leading-relaxed'>
+              <div className='space-y-4 text-gray-700 dark:text-gray-300 leading-relaxed'>
                 <p>
                   Hello! I'm{' '}
                   <span className='text-purple-300 font-semibold'>Richie</span>,
-                  an enthusiastic beginner in the fascinating world of web
-                  development. My journey started with a simple curiosity about
-                  how websites work, and it has evolved into a genuine passion
-                  for creating digital experiences.
+                  an enthusiastic beginner in the world of web development. My
+                  journey began with a curiosity about how websites work, and
+                  it’s now evolved into a passion for building interactive,
+                  user-friendly, and meaningful digital experiences.
                 </p>
                 <p>
-                  Although I'm still learning, I approach every challenge with
-                  determination and creativity. I believe that the best websites
-                  don't just look beautiful – they solve real problems and
-                  create meaningful connections between people and technology.
+                  Even though I’m still learning, I approach every project with
+                  creativity, consistency, and a problem-solving mindset. I
+                  believe great websites do more than look good — they create
+                  real value, solve user problems, and foster connection.
                 </p>
                 <p>
-                  When I'm not coding, you'll find me exploring new design
-                  trends, experimenting with 3D graphics, or diving deep into
-                  the latest web technologies. I'm always eager to learn, grow,
-                  and collaborate with fellow developers.
+                  Lately, I’ve also been diving into AI-powered tools and
+                  exploring how artificial intelligence can make the web smarter
+                  and more personalized. I’m especially interested in how AI and
+                  3D web technologies can enhance user experience.
+                </p>
+                <p>
+                  When I’m not coding, you’ll find me experimenting with visual
+                  design trends, playing with Three.js, or exploring new ways to
+                  grow as a developer. I’m always excited to learn, build, and
+                  collaborate.
                 </p>
               </div>
             </motion.div>
@@ -142,9 +148,9 @@ const About = () => {
             {/* Skills Preview */}
             <motion.div
               variants={itemVariants}
-              className='glass rounded-2xl p-6 border border-white/10'
+              className='bg-white/10 dark:bg-white/5 rounded-2xl p-6 border border-white/30 dark:border-white/10 backdrop-blur-xl hover:bg-white/15 dark:hover:bg-white/10 transition-all duration-300'
             >
-              <h4 className='font-semibold text-white mb-4'>
+              <h4 className='font-semibold text-gray-900 dark:text-white mb-4'>
                 Currently Mastering
               </h4>
               <div className='flex flex-wrap gap-3'>
@@ -185,7 +191,7 @@ const About = () => {
                     rotateY: 5,
                     rotateX: 5,
                   }}
-                  className='glass rounded-xl p-6 border border-white/10 card-hover group'
+                  className='bg-white/10 dark:bg-white/5 rounded-xl p-6 border border-white/30 dark:border-white/10 backdrop-blur-xl hover:bg-white/15 dark:hover:bg-white/10 transition-all duration-300 card-hover group'
                   style={{ transformStyle: 'preserve-3d' }}
                 >
                   <div
@@ -194,11 +200,11 @@ const About = () => {
                     <Icon size={24} className='text-white' />
                   </div>
 
-                  <h4 className='font-semibold text-white text-lg mb-2'>
+                  <h4 className='font-semibold text-gray-900 dark:text-white text-lg mb-2'>
                     {highlight.title}
                   </h4>
 
-                  <p className='text-gray-400 text-sm leading-relaxed'>
+                  <p className='text-gray-600 dark:text-gray-400 text-sm leading-relaxed'>
                     {highlight.description}
                   </p>
                 </motion.div>
@@ -206,6 +212,37 @@ const About = () => {
             })}
           </motion.div>
         </div>
+
+        {/* Project Showcase */}
+        <motion.div
+          variants={containerVariants}
+          initial='hidden'
+          animate={inView ? 'visible' : 'hidden'}
+          className='mt-20'
+        >
+          <motion.div variants={itemVariants} className='text-center mb-12'>
+            <motion.span
+              variants={itemVariants}
+              className='inline-block px-4 py-2 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-500/30 text-blue-300 text-sm font-medium mb-4'
+            >
+              🚀 Featured Projects
+            </motion.span>
+            <motion.h2
+              variants={itemVariants}
+              className='font-display text-4xl md:text-5xl lg:text-6xl font-bold gradient-text mb-6'
+            >
+              Project Showcase
+            </motion.h2>
+            <motion.p
+              variants={itemVariants}
+              className='text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed'
+            >
+              My amazing projects are coming soon! Stay tuned for interactive
+              demos and live projects.
+            </motion.p>
+          </motion.div>
+          <ProjectShowcaseGrid />
+        </motion.div>
 
         {/* Stats Section */}
         <motion.div
@@ -223,13 +260,15 @@ const About = () => {
             <motion.div
               key={stat.label}
               variants={itemVariants}
-              className='text-center glass rounded-xl p-6 border border-white/10'
+              className='text-center bg-white/10 dark:bg-white/5 rounded-xl p-6 border border-white/30 dark:border-white/10 backdrop-blur-xl hover:bg-white/15 dark:hover:bg-white/10 transition-all duration-300'
             >
               <div className='text-3xl mb-2'>{stat.icon}</div>
               <div className='font-display text-3xl font-bold gradient-text mb-1'>
                 {stat.number}
               </div>
-              <div className='text-gray-400 text-sm'>{stat.label}</div>
+              <div className='text-gray-600 dark:text-gray-400 text-sm'>
+                {stat.label}
+              </div>
             </motion.div>
           ))}
         </motion.div>

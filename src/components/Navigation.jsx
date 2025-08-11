@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Home, User, Briefcase, Lightbulb, Mail } from 'lucide-react';
+import { useTheme } from '../contexts/ThemeContext';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const { theme, isDarkMode } = useTheme();
 
   const navItems = [
     { id: 'home', label: 'Home', icon: Home },
@@ -63,7 +65,11 @@ const Navigation = () => {
         transition={{ duration: 0.8, delay: 0.2 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'bg-black/20 backdrop-blur-lg border-b border-white/10'
+            ? `${
+                isDarkMode ? 'bg-black/20' : 'bg-white/20'
+              } backdrop-blur-lg border-b ${
+                isDarkMode ? 'border-white/10' : 'border-black/10'
+              }`
             : 'bg-transparent'
         }`}
       >
@@ -93,9 +99,18 @@ const Navigation = () => {
                     onClick={() => scrollToSection(item.id)}
                     className={`flex items-center space-x-2 px-4 py-2 rounded-full transition-all duration-300 ${
                       activeSection === item.id
-                        ? 'bg-purple-500/20 text-purple-300 glow-box'
-                        : 'text-gray-300 hover:text-white hover:bg-white/10'
+                        ? `bg-gradient-to-r ${theme.primary} bg-opacity-20 glow-box`
+                        : `${
+                            isDarkMode
+                              ? 'text-gray-300 hover:text-white hover:bg-white/10'
+                              : 'text-gray-700 hover:text-black hover:bg-black/10'
+                          }`
                     }`}
+                    style={
+                      activeSection === item.id
+                        ? { color: theme.text.accent }
+                        : {}
+                    }
                   >
                     <Icon size={16} />
                     <span className='font-medium'>{item.label}</span>
