@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 import React, { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -11,7 +12,7 @@ import Skills from './components/Skills';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import LoadingScreen from './components/LoadingScreen';
-import ParticleBackground from './components/ParticleBackground';
+import Prism from './components/Prism';
 import FloatingShapes from './components/FloatingShapes';
 import ErrorBoundary from './components/ErrorBoundary';
 import FloatingActionButton from './components/FloatingActionButton';
@@ -78,8 +79,8 @@ const AppContent = () => {
               </Canvas>
             </div>
 
-            {/* Particle Background */}
-            <ParticleBackground />
+            {/* Prism Background */}
+            <Prism />
 
             {/* Main Content */}
             <div className='relative z-20'>
@@ -119,3 +120,4 @@ function App() {
 }
 
 export default App;
+/* eslint-enable react/no-unknown-property */

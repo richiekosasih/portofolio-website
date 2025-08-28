@@ -1,20 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Palette, Sun, Moon, Check, Settings, X } from 'lucide-react';
+import { Palette, Sun, Moon, Settings, X } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 
 const ThemeSelector = () => {
   const { currentTheme, isDarkMode, themes, changeTheme, toggleDarkMode } =
     useTheme();
   const [isOpen, setIsOpen] = useState(false);
-
-  const themeColors = {
-    purple: ['#8b5cf6', '#3b82f6'],
-    blue: ['#3b82f6', '#06b6d4'],
-    green: ['#22c55e', '#10b981'],
-    orange: ['#f97316', '#ef4444'],
-    pink: ['#ec4899', '#a855f7'],
-  };
 
   const containerVariants = {
     hidden: { opacity: 0, scale: 0.8 },
@@ -115,61 +107,42 @@ const ThemeSelector = () => {
               </p>
             </motion.div>
 
-            {/* Theme Colors */}
+            {/* Mode Selection */}
             <motion.div variants={itemVariants}>
-              <h4 className='text-gray-300 font-medium mb-3'>Color Themes</h4>
+              <h4 className='text-gray-300 font-medium mb-3'>Mode</h4>
               <div className='grid grid-cols-2 gap-3'>
-                {Object.entries(themes).map(([key, theme]) => (
-                  <motion.button
-                    key={key}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => changeTheme(key)}
-                    className={`relative p-3 rounded-xl border-2 transition-all duration-300 ${
-                      currentTheme === key
-                        ? 'border-white/50 bg-white/10'
-                        : 'border-white/20 hover:border-white/30 hover:bg-white/5'
-                    }`}
-                  >
-                    {/* Color Preview */}
-                    <div className='flex items-center space-x-2 mb-2'>
-                      <div className='flex space-x-1'>
-                        {themeColors[key].map((color, index) => (
-                          <div
-                            key={index}
-                            className='w-4 h-4 rounded-full'
-                            style={{ backgroundColor: color }}
-                          />
-                        ))}
-                      </div>
-                      {currentTheme === key && (
-                        <Check size={14} className='text-green-400 ml-auto' />
-                      )}
-                    </div>
-
-                    {/* Theme Name */}
-                    <div className='text-left'>
-                      <p className='text-white text-sm font-medium'>
-                        {theme.name}
-                      </p>
-                      <p className='text-gray-400 text-xs'>
-                        {key.charAt(0).toUpperCase() + key.slice(1)} theme
-                      </p>
-                    </div>
-
-                    {/* Active Indicator */}
-                    {currentTheme === key && (
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        className='absolute inset-0 rounded-xl bg-gradient-to-r opacity-20'
-                        style={{
-                          background: `linear-gradient(135deg, ${themeColors[key][0]}, ${themeColors[key][1]})`,
-                        }}
-                      />
-                    )}
-                  </motion.button>
-                ))}
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => changeTheme('dark')}
+                  className={`p-3 rounded-xl border-2 transition-all duration-300 ${
+                    currentTheme === 'dark'
+                      ? 'border-white/50 bg-white/10'
+                      : 'border-white/20 hover:border-white/30 hover:bg-white/5'
+                  }`}
+                >
+                  <div className='flex items-center space-x-2'>
+                    <Moon size={14} className='text-purple-400' />
+                    <span className='text-white text-sm font-medium'>Dark</span>
+                  </div>
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => changeTheme('light')}
+                  className={`p-3 rounded-xl border-2 transition-all duration-300 ${
+                    currentTheme === 'light'
+                      ? 'border-white/50 bg-white/10'
+                      : 'border-white/20 hover:border-white/30 hover:bg-white/5'
+                  }`}
+                >
+                  <div className='flex items-center space-x-2'>
+                    <Sun size={14} className='text-yellow-400' />
+                    <span className='text-white text-sm font-medium'>
+                      Light
+                    </span>
+                  </div>
+                </motion.button>
               </div>
             </motion.div>
 

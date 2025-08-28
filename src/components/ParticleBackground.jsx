@@ -1,7 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import { useTheme } from '../contexts/ThemeContext';
 
 const ParticleBackground = () => {
   const canvasRef = useRef(null);
+  const { theme } = useTheme();
+  const accentColor = theme.text.accent;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -10,6 +13,7 @@ const ParticleBackground = () => {
     const ctx = canvas.getContext('2d');
     const particles = [];
     const particleCount = 100;
+    let animationId;
 
     // Set canvas size
     const resizeCanvas = () => {
@@ -29,7 +33,7 @@ const ParticleBackground = () => {
         this.vy = (Math.random() - 0.5) * 0.5;
         this.radius = Math.random() * 2 + 1;
         this.opacity = Math.random() * 0.5 + 0.2;
-        this.hue = Math.random() * 60 + 240; // Blue to purple range
+        this.color = accentColor;
       }
 
       update() {
@@ -37,8 +41,8 @@ const ParticleBackground = () => {
         this.y += this.vy;
 
         // Bounce off edges
-        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+        if (this.x < 0 || this.x > canvas.width) this.vx *= -2;
+        if (this.y < 0 || this.y > canvas.height) this.vy *= -2;
 
         // Keep particles in bounds
         this.x = Math.max(0, Math.min(canvas.width, this.x));
@@ -50,7 +54,7 @@ const ParticleBackground = () => {
         ctx.globalAlpha = this.opacity;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `hsl(${this.hue}, 70%, 60%)`;
+        ctx.fillStyle = this.color;
         ctx.fill();
         ctx.restore();
       }
@@ -79,7 +83,7 @@ const ParticleBackground = () => {
           if (distance < 100) {
             ctx.save();
             ctx.globalAlpha = ((100 - distance) / 100) * 0.1;
-            ctx.strokeStyle = `hsl(${particle.hue}, 70%, 60%)`;
+            ctx.strokeStyle = particle.color;
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(particle.x, particle.y);
@@ -90,15 +94,16 @@ const ParticleBackground = () => {
         });
       });
 
-      requestAnimationFrame(animate);
+      animationId = requestAnimationFrame(animate);
     };
 
     animate();
 
     return () => {
       window.removeEventListener('resize', resizeCanvas);
+      if (animationId) cancelAnimationFrame(animationId);
     };
-  }, []);
+  }, [accentColor]);
 
   return (
     <canvas

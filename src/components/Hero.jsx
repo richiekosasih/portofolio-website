@@ -196,15 +196,19 @@ const Hero = () => {
             {[
               {
                 icon: Github,
-                href: 'https://github.com/richie',
+                href: 'https://github.com/richiekosasih',
                 label: 'GitHub',
               },
               {
                 icon: Linkedin,
-                href: 'https://linkedin.com/in/richie',
+                href: 'https://linkedin.com/in/richiekosasih',
                 label: 'LinkedIn',
               },
-              { icon: Mail, href: 'mailto:richie@example.com', label: 'Email' },
+              {
+                icon: Mail,
+                href: 'mailto:richiekosasih@gmail.com',
+                label: 'Email',
+              },
             ].map((social, index) => {
               const Icon = social.icon;
               return (

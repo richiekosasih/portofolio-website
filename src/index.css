@@ -310,6 +310,13 @@ body {
   }
 }
 
+/* Prism container */
+.prism-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
 .spinner {
   animation: spin 1s linear infinite;
 }
